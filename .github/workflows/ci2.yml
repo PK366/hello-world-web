@@ -35,6 +35,8 @@ jobs:
 
     - name: Package the application
       run: mvn package
+    - name: Create deployment directory
+      run: mkdir -p /home/runner/work/hello-world-web/hello-world-web/deployment
 
     - name: Deploy WAR file
       run: cp target/hello-world-web.war ${{ github.workspace }}/deployment/
