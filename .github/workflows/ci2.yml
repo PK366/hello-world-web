@@ -52,7 +52,7 @@ jobs:
 
     - name: Deploy WAR to Tomcat Server
       run: |
-        scp -P 9090 target/hello-world-web.war sspl@192.168.1.107:/usr/local/tomcat/webapps/
+         scp -P 9090 target/hello-world-web.war sspl@192.168.1.107:**/usr/local/tomcat/webapps/
       env:
         WAR_FILE: target/hello-world-web.war
         TOMCAT_USER: ${{ secrets.TOMCAT_USER }}
