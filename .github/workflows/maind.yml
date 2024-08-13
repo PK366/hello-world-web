@@ -1,0 +1,16 @@
+name: Demo
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  trigger-job:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Trigger Jenkins Job
+      run: |
+        curl -X POST "http://192.168.1.107:8080/job/hello-world-web/build" \
+             -u pk:110f45fbb51863a761800767ecb59edad7
+      timeout-minutes: 10
