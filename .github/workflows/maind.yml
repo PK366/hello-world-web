@@ -11,6 +11,6 @@ jobs:
     steps:
     - name: Trigger Jenkins Job
       run: |
-        curl -X POST "http://127.0.0.1:8080/job/hello-world-web/build" \
+        curl -X POST "http://localhost:8080/job/hello-world-web/build" \
              -u pk:1115a24ed97cc83111bdcfb8917e10c81f
       timeout-minutes: 10
