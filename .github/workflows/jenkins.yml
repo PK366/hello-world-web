@@ -12,12 +12,16 @@ jobs:
     - name: Get Public IP Address
       run: 
         curl -s ifconfig.me
-    - name: Check Connectivity
+    - name: Check CRUMB
       run: |
-        curl -v http://192.168.1.107:8080
+        CRUMB=$(curl -u "$JENKINS_USER:$JENKINS_API_TOKEN" -s 'http://192.168.1.107:8080/crumbIssuer/api/json' | jq -r '.crumb')
+
     - name: Trigger Jenkins Job
       run: |
-        curl -X POST "http://192.168.1.107:8080/job/hello-world-web/build?token=mysecret" --max-time 120
+        curl -X POST "http://192.168.1.107:8080/job/hello-world-web/build?token=mysecret" \
+             --max-time 120 \ -H "Jenkins-Crumb:$CRUMB" \ 
+             -u "$JENKINS_USER:$JENKINS_API_TOKEN"
+
       env:
         JENKINS_USER: ${{ secrets.JENKINS_USER }}
         JENKINS_PASS: ${{ secrets.JENKINS_PASS }}
