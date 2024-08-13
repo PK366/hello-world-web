@@ -3,10 +3,10 @@ name: CI 2 for Hello World Web
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   build:
