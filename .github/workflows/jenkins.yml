@@ -14,4 +14,5 @@ jobs:
         curl -X POST "http://192.168.1.107:8080/job/hello-world-web/build?token=mysecret"
       env:
         JENKINS_USER: ${{ secrets.JENKINS_USER }}
+        JENKINS_PASS: ${{ secrets.JENKINS_PASS }}
         JENKINS_API_TOKEN: ${{ secrets.JENKINS_API_TOKEN }}
