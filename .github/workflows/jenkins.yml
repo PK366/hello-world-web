@@ -9,6 +9,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - name: Get Public IP Address
+      run: 
+        curl -s ifconfig.me
     - name: Check Connectivity
       run: |
         curl -v http://192.168.1.107:8080
