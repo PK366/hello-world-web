@@ -9,9 +9,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - name: Check Connectivity
+      run: |
+        curl -v http://192.168.1.107:8080
     - name: Trigger Jenkins Job
       run: |
-        curl -X POST "http://192.168.1.107:8080/job/hello-world-web/build?token=mysecret"
+        curl -X POST "http://192.168.1.107:8080/job/hello-world-web/build?token=mysecret" --max-time 120
       env:
         JENKINS_USER: ${{ secrets.JENKINS_USER }}
         JENKINS_PASS: ${{ secrets.JENKINS_PASS }}
