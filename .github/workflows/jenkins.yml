@@ -15,11 +15,12 @@ jobs:
     - name: Check CRUMB
       run: |
         CRUMB=$(curl -u "$JENKINS_USER:$JENKINS_API_TOKEN" -s 'http://192.168.1.107:8080/crumbIssuer/api/json' | jq -r '.crumb')
+        echo "CRUMB=$CRUMB" >> $GITHUB_ENV
 
     - name: Trigger Jenkins Job
       run: |
         curl -X POST "http://192.168.1.107:8080/job/hello-world-web/build?token=mysecret" \
-             --max-time 120 \ -H "Jenkins-Crumb:$CRUMB" \ 
+             --max-time 120 \ -H "Jenkins-Crumb: ${{ env.CRUMB }}" \ 
              -u "$JENKINS_USER:$JENKINS_API_TOKEN"
 
       env:
