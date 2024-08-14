@@ -71,5 +71,6 @@ jobs:
       env:
         TOMCAT_USER: ${{ secrets.TOMCAT_USER }}
         TOMCAT_PASSWORD: ${{ secrets.TOMCAT_PASSWORD }}
+        SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
         TOMCAT_HOST: ${{ secrets.TOMCAT_HOST }}
         TOMCAT_PORT: ${{ secrets.TOMCAT_PORT }}
