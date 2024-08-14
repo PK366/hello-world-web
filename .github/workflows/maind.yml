@@ -12,5 +12,5 @@ jobs:
     - name: Trigger Jenkins Job
       run: |
         curl -X POST "http://192.168.1.107:8080/job/hello-world-web/build?token=mysecret" \
-             -u pk:1115a24ed97cc83111bdcfb8917e10c81f
+             -u pk:1150c1def5598936e1647cf25dea3c0744
       timeout-minutes: 10
