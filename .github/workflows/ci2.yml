@@ -47,6 +47,10 @@ jobs:
     needs: build
     runs-on: self-hosted
     steps:
+    - name: Setup SSH Key
+      run: 
+       chmod 600 ~/.ssh/id_rsa
+       ssh-keyscan -H 192.168.1.107 >> ~/.ssh/known_hosts
     - name: Check deployment directory
       run: ls -l ${{ github.workspace }}/deployment
 
