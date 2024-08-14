@@ -36,7 +36,3 @@ jobs:
     - name: Package the application
       run: mvn package
 
-    - name: Deploy WAR file
-      run: cp target/hello-world-web.war ${{ github.workspace }}/deployment/
-      env:
-        WAR_FILE: target/hello-world-web.war
