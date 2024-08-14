@@ -47,6 +47,12 @@ jobs:
     needs: build
     runs-on: self-hosted
     steps:
+    - name: Check deployment directory
+      run: ls -l ${{ github.workspace }}/deployment
+
+    - name: Check for WAR file
+      run: ls -l ${{ github.workspace }}/deployment/hello-world-web.war
+
     - name: Checkout code
       uses: actions/checkout@v3
 
