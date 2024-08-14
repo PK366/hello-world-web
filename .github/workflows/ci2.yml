@@ -62,7 +62,7 @@ jobs:
 
     - name: Deploy WAR to Tomcat Server
       run: |
-         scp -P 22 ${{ github.workspace }}/target/hello-world-web.war sspl@192.168.1.107:/usr/local/tomcat/webapps/
+         scp -v -P 22 ${{ github.workspace }}/target/hello-world-web.war sspl@192.168.1.107:/usr/local/tomcat/webapps/
       env:
         TOMCAT_USER: ${{ secrets.TOMCAT_USER }}
         TOMCAT_PASSWORD: ${{ secrets.TOMCAT_PASSWORD }}
