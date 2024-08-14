@@ -50,7 +50,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Deploy WAR to Tomcat Server
+    - name: Deploy WAR to Tomcat Server demo
       run: |
          scp -P 22 target/hello-world-web.war sspl@192.168.1.107:/usr/local/tomcat/webapps/
       env:
