@@ -1,4 +1,4 @@
-name: CI 2 for Hello World Web
+name: Build and Deploy to Tomcat Server
 
 on:
   push:
