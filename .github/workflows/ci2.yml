@@ -48,7 +48,7 @@ jobs:
     runs-on: self-hosted
     steps:
     - name: Set permissions on Tomcat webapps directory
-      run: echo "sspl@123" | ssh sspl@192.168.1.107 "sudo -S chmod o+w /usr/local/tomcat/webapps/"
+      run: echo '${{ secrets.SERVER_PASSWORD }}' | ssh sspl@192.168.1.107 "sudo -S chmod o+w /usr/local/tomcat/webapps/"
 
     - name: Setup SSH Key
       run: |
