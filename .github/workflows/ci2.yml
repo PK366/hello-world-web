@@ -62,10 +62,12 @@ jobs:
 
     - name: Checkout code
       uses: actions/checkout@v3
+    - name: Upload WAR to temporary directory
+      run: scp -v -P 22 /home/sspl/actions-runner/_work/hello-world-web/hello-world-web/target/hello-world-web.war sspl@192.168.1.107:/home/sspl/
 
-    - name: Deploy WAR to Tomcat Server
-      run: |
-         scp -v -P 22 ${{ github.workspace }}/target/hello-world-web.war sspl@192.168.1.107:/usr/local/tomcat/webapps/
+    - name: Move WAR to Tomcat directory
+      run: ssh sspl@192.168.1.107 "sudo mv /home/sspl/hello-world-web.war /usr/local/tomcat/webapps/"
+  
       env:
         TOMCAT_USER: ${{ secrets.TOMCAT_USER }}
         TOMCAT_PASSWORD: ${{ secrets.TOMCAT_PASSWORD }}
