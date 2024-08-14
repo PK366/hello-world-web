@@ -66,7 +66,7 @@ jobs:
       run: scp -v -P 22 /home/sspl/actions-runner/_work/hello-world-web/hello-world-web/target/hello-world-web.war sspl@192.168.1.107:/home/sspl/
 
     - name: Move WAR to Tomcat directory
-      run: ssh sspl@192.168.1.107 "sudo -S mv /home/sspl/hello-world-web.war /usr/local/tomcat/webapps/"
+      run: ssh sspl@192.168.1.107 "echo '${{ secrets.SERVER_PASSWORD }}' | sudo -S mv /home/sspl/hello-world-web.war /usr/local/tomcat/webapps/"
   
       env:
         TOMCAT_USER: ${{ secrets.TOMCAT_USER }}
