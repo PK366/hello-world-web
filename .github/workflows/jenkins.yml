@@ -9,14 +9,16 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
-    - name: Get Public IP Address
-      run: 
-        curl -s ifconfig.me
+    - name: Retrieve Jenkins Crumb
+      run: |
+       CRUMB=$(curl -u "$JENKINS_USER:$JENKINS_API_TOKEN" -s 'http://192.168.1.107:8080/crumbIssuer/api/json' | jq -r '.crumb')
+       echo "CRUMB=$CRUMB" >> $GITHUB_ENV
+
     - name: Trigger Jenkins Job
       run: |
-        curl -X POST "http://192.168.1.107:8080/job/hello-world-web/build?token=mysecret" \
-             --max-time 120 \ -u "$JENKINS_USER:$JENKINS_API_TOKEN"
-
-      env:
-        JENKINS_USER: ${{ secrets.JENKINS_USER }}
-        JENKINS_API_TOKEN: ${{ secrets.JENKINS_API_TOKEN }}
+       curl -X POST "http://192.168.1.107:8080/job/hello-world-web/build?token=mysecret" \
+           -u "$JENKINS_USER:$JENKINS_API_TOKEN" \
+           -H "Jenkins-Crumb:$CRUMB"
+    env:
+      JENKINS_USER: ${{ secrets.JENKINS_USER }}
+      JENKINS_API_TOKEN: ${{ secrets.JENKINS_API_TOKEN }}
