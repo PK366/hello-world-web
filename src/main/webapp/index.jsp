@@ -2,10 +2,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hello World</title>
+    <title>Hello Simplilearn</title>
 </head>
 <body>
-    <h1>Hello, World!</h1>
+    <h1>Hello, Simplilearn!</h1>
     <p>Welcome to your first Java web application!</p>
 </body>
 </html>
