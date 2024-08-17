@@ -1,0 +1,76 @@
+name: Build and Deploy to Tomcat Server
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v3
+      with:
+        java-version: '21'
+        distribution: 'adopt'
+        cache: maven
+
+    - name: Validate POM file
+      run: mvn validate
+
+    - name: Compile the code
+      run: mvn compile
+
+    - name: Run tests
+      run: mvn test
+
+    - name: Package the application
+      run: mvn package
+
+    - name: Create deployment directory
+      run: mkdir -p ${{ github.workspace }}/deployment
+
+    - name: Deploy WAR file
+      run: cp target/hello-world-web.war ${{ github.workspace }}/deployment/
+      env:
+        WAR_FILE: target/hello-world-web.war
+
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+    - name: Set permissions on Tomcat webapps directory
+      run: echo '${{ secrets.SERVER_PASSWORD }}' | ssh sspl@192.168.1.107 "sudo -S chmod o+w /usr/local/tomcat/webapps/"
+
+    - name: Setup SSH Key
+      run: |
+       chmod 600 ~/.ssh/id_rsa
+       ssh-keyscan -H 192.168.1.107 >> ~/.ssh/known_hosts
+    - name: Check deployment directory
+      run: ls -l ${{ github.workspace }}/deployment
+
+    - name: Check for WAR file
+      run: ls -l ${{ github.workspace }}/deployment/hello-world-web.war
+
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Upload WAR to temporary directory
+      run: scp -v -P 22 /home/sspl/actions-runner/_work/hello-world-web/hello-world-web/target/hello-world-web.war sspl@192.168.1.107:/home/sspl/
+
+    - name: Move WAR to Tomcat directory
+      run: ssh sspl@192.168.1.107 "echo '${{ secrets.SERVER_PASSWORD }}' | sudo -S mv /home/sspl/hello-world-web.war /usr/local/tomcat/webapps/"
+  
+      env:
+        TOMCAT_USER: ${{ secrets.TOMCAT_USER }}
+        TOMCAT_PASSWORD: ${{ secrets.TOMCAT_PASSWORD }}
+        SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+        TOMCAT_HOST: ${{ secrets.TOMCAT_HOST }}
+        TOMCAT_PORT: ${{ secrets.TOMCAT_PORT }}
