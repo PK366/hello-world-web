@@ -32,4 +32,6 @@ jobs:
 
     - name: Package the application
       run: mvn package
+    - name: Run Tests
+      run: mvn test
 
