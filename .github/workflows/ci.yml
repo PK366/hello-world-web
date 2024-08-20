@@ -30,6 +30,6 @@ jobs:
     - name: Compile the code
       run: mvn compile
 
-    - name: Run Tests
-      run: mvn test
+    - name: Package the code
+      run: mvn package
 
