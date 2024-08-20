@@ -23,7 +23,8 @@
             <artifactId>maven-war-plugin</artifactId>
             <version>3.3.2</version>
             <configuration>
-                <!-- Your configuration here -->
+               <source>17</source>
+               <target>17</target>
             </configuration>
         </plugin>
     </plugins>
