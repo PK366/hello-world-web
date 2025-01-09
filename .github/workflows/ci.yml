@@ -1,4 +1,4 @@
-name: CI GitHub Action pipeline
+name: CI GitHub Actions pipeline
 
 on:
   push:
